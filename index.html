@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Million Scholar Baby</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="title-container">
+<h1>Million Scholar Baby</h1>
+</div>
+<form id="loanForm">
+    <label for="university">University:</label>
+    <input type="text" id="university" placeholder="University Name" required><br>
+
+    <label for="country">Country You're From:</label>
+    <input type="text" id="country" placeholder="Country" required><br>
+
+    <label for="major">Major:</label>
+    <input type="text" id="major" placeholder="Major" required><br>
+
+    <label for="studentLoan">Student Loan Amount:</label>
+    <input type="number" id="studentLoan" placeholder="Loan Amount" required><br>
+
+    <label for="federalGrantsInterest">Interested in Federal Grants:</label>
+    <select id="federalGrantsInterest">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select><br>
+    
+    <h3>Are you interested in exploring online ways to make passive income?</h3>
+    <label>
+        <input type="radio" name="passiveIncomeInterest" value="yes" checked onclick="togglePassiveIncomeOptions()"> Yes
+    </label>
+    <label>
+        <input type="radio" name="passiveIncomeInterest" value="no" onclick="togglePassiveIncomeOptions()"> No
+    </label><br>
+
+    <div id="passiveIncomeOptions" style="display:none;">
+        <h3>Select the ways you're interested in:</h3>
+        <label>
+            <input type="checkbox" name="incomeOption" value="affiliateMarketing"> Affiliate Marketing
+        </label><br>
+        <label>
+            <input type="checkbox" name="incomeOption" value="contentCreation"> Content Creation (YouTube, Blogging)
+        </label><br>
+        <label>
+            <input type="checkbox" name="incomeOption" value="stockInvesting"> Stock Investing
+        </label><br>
+        <label>
+            <input type="checkbox" name="incomeOption" value="realEstate"> Real Estate Investing
+        </label><br>
+        <label>
+            <input type="checkbox" name="incomeOption" value="onlineCourses"> Creating Online Courses
+        </label><br>
+    </div>
+    
+    <button type="button" onclick="getRecommendations()">Get Recommendations</button>
+</form>
+
+<div id="recommendations"></div>
+<div id="mentors"></div> <!-- Ensure this div is present to display mentors -->
+
+<div class="mentors-container">
+<h3>Feedback on Recommendations:</h3>
+</div>
+<form id="feedbackForm">
+    <label>How helpful were the recommendations?</label>
+    <select id="feedbackRating">
+        <option value="excellent">Excellent</option>
+        <option value="good">Good</option>
+        <option value="average">Average</option>
+        <option value="poor">Poor</option>
+    </select><br>
+    <label>Additional comments:</label>
+    <textarea id="feedbackComments" placeholder="Enter comments"></textarea><br>
+    <button type="button" onclick="submitFeedback()">Submit Feedback</button>
+</form>
+<div id="recommendations" style="white-space: pre-wrap;"></div>
+<script>
+function togglePassiveIncomeOptions() {
+    const yesOption = document.querySelector('input[name="passiveIncomeInterest"][value="yes"]').checked;
+    const passiveIncomeOptions = document.getElementById('passiveIncomeOptions');
+    if (yesOption) {
+        passiveIncomeOptions.style.display = 'block';
+    } else {
+        passiveIncomeOptions.style.display = 'none';
+    }
+}
+
+function getRecommendations() {
+    const university = document.getElementById('university').value;
+    const country = document.getElementById('country').value;
+    const major = document.getElementById('major').value;
+    const studentLoan = document.getElementById('studentLoan').value;
+    const federalGrantsInterest = document.getElementById('federalGrantsInterest').value;
+    const passiveIncomeInterest = document.querySelector('input[name="passiveIncomeInterest"]:checked').value;
+    const incomeOptions = Array.from(document.querySelectorAll('input[name="incomeOption"]:checked')).map(option => option.value);
+
+    fetch('/get-recommendations', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({university, studentLoan, country, federalGrantsInterest, major, passiveIncomeInterest, incomeOptions})
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        document.getElementById('recommendations').textContent = data.recommendations;
+        const mentorsDiv = document.getElementById('mentors');
+        mentorsDiv.innerHTML = '<div class="mentors-container"><h3>Connect with Mentors:</h3></div>';
+        data.mentors.forEach(mentor => {
+            mentorsDiv.innerHTML += `<div class="mentors-container"><p>${mentor.name} - ${mentor.expertise} - <a href="mailto:${mentor.discordcontact}">${mentor.discordcontact}</a></p></div>`;
+        });
+
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('recommendations').textContent = 'Failed to fetch recommendations.';
+    });
+}
+
+function submitFeedback() {
+    const rating = document.getElementById('feedbackRating').value;
+    const comments = document.getElementById('feedbackComments').value;
+
+    fetch('/submit-feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({rating, comments})
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Thank you for your feedback!');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    togglePassiveIncomeOptions();  // Initialize the display state based on default checked value
+});
+</script>
+</body>
+</html>

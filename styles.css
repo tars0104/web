@@ -1,0 +1,135 @@
+.login-container {
+    background-color: white; /* White background for the box */
+    padding: 30px 20px; /* Extra padding for the form */
+    border-radius: 10px; /* Rounded corners (optional) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a slight shadow for a better look */
+    text-align: center;
+    display: center;
+    max-width: 400px; /* Restrict the width */
+    margin: 50px auto; /* Centers the box horizontally */
+}
+
+.login-container h3 {
+    margin-bottom: 20px;
+}
+
+.login-container input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-container button {
+    display: inline-block;
+    background-color: #75f25c;
+    color: rgb(3, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-container button:hover {
+    background-color: #040000f7;
+}
+
+.title-container {
+    background-color: white; /* White background for the title */
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: 20px auto; /* Center the title box */
+}
+
+.mentors-container {
+    background-color: white; /* White background for the box */
+    padding: 20px; /* Some padding around the text */
+    border-radius: 10px; /* Rounded corners (optional) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a slight shadow for a better look */
+    text-align: center;
+    display: center;
+    margin: 20px auto; /* Centers the box horizontally */
+    max-width: 30%; /* Optional: Restrict the width */
+   
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    background-image: url('MSB(3).png'); /* Path to the background image */
+    background-size: contain; /* Ensure the background fits within the page */
+    background-position: center; /* Center the background image */
+    background-repeat: repeat; /* Repeat the background to fill the page */
+    background-attachment: fixed; /* Keep the background fixed during scroll */
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input, select, textarea {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #fbfbfb;
+    border-radius: 5px;
+}
+/* Additional styles for passive income options */
+#passiveIncomeOptions {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+button {
+    display: inline-block;
+    background-color: #75f25c;
+    color: rgb(3, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #040000f7;
+}
+
+h3 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+#recommendations {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffff;
+    box-shadow: 0 0 10px rgba(255, 254, 254, 0.1);
+    border-radius: 5px;
+}
